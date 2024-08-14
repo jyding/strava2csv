@@ -13,14 +13,16 @@ services:
     build:
       context: ./demo-app-express-backend
       dockerfile: Dockerfile
-    environment:
-      - DB_PATH=/data/database.db 
     env_file:
       - .env
     ports:
       - "3002:3002"
     volumes:
-      - db_data:/data
+      - ./csv_files:/app/csv_files
 
-volumes:
-  db_data:
+  jupyter:
+    image: jupyter/scipy-notebook:latest
+    volumes:
+      - ./csv_files:/home/jovyan/csv_files
+    ports:
+      - "8888:8888"
